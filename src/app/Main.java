@@ -2,15 +2,13 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +40,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        ClearViewModel clearViewModel = new ClearViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -50,7 +49,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, clearViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
@@ -58,6 +57,9 @@ public class Main {
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+        ClearView clearView = ClearUseCaseFactory.create(viewManagerModel, clearViewModel, userDataAccessObject);
+        views.add(clearView, clearView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();

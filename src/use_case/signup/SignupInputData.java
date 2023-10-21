@@ -6,6 +6,7 @@ public class SignupInputData {
     final private String password;
     final private String repeatPassword;
 
+
     public SignupInputData(String username, String password, String repeatPassword) {
         this.username = username;
         this.password = password;
