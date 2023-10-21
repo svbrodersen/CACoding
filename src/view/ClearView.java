@@ -13,37 +13,35 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class ClearView extends JPanel implements ActionListener, PropertyChangeListener {
+public class ClearView extends JPanel implements PropertyChangeListener{
     public final String viewName = "clear view";
-    JLabel usernames;
     private final ClearViewModel clearViewModel;
-
+    private final JLabel usernames;
     private final ClearController clearController;
 
     public ClearView(ClearViewModel clearViewModel, ClearController clearController) {
         this.clearViewModel = clearViewModel;
         this.clearController = clearController;
-        this.clearViewModel.addPropertyChangeListener(this);
+        clearViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Cleared Screen");
+        JLabel title = new JLabel(clearViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        usernames = new JLabel();
+        usernames = new JLabel(clearViewModel.USERNAMES_LABEL);
+        usernames.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(title);
         this.add(usernames);
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("CHANGE");
         clearController.execute();
         ClearState state = (ClearState) evt.getNewValue();
-        setFields(state);
+        doPopUp(state);
     }
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
-    }
-    private void setFields(ClearState state) {
-        usernames.setText(state.toString());
+
+    private void doPopUp(ClearState state) {
+        JOptionPane.showMessageDialog(this, state.toString());
     }
 }

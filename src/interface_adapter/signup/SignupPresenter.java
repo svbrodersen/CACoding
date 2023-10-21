@@ -53,10 +53,9 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     @Override
     public void prepareClearView() {
-        System.out.println("PREPARE CLEAR");
-        System.out.println(clearViewModel.getViewName());
-        viewManagerModel.setActiveView(clearViewModel.getViewName());
         clearViewModel.firePropertyChanged();
-        System.out.println("FIRED");
+
+        viewManagerModel.setActiveView(clearViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

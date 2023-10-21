@@ -58,8 +58,8 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        ClearView clearview = ClearUseCaseFactory.create(viewManagerModel, clearViewModel, userDataAccessObject);
-        views.add(clearview, clearview.viewName);
+        ClearView clearView = ClearUseCaseFactory.create(viewManagerModel, clearViewModel, userDataAccessObject);
+        views.add(clearView, clearView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
